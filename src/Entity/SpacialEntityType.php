@@ -14,7 +14,7 @@ class SpacialEntityType
     const PLANET = 'planet';
     const SATELLITE = 'satellite';
 
-    const ALL = [self::STAR, self::PLANET, self::SATELLITE];
+    const DEFAULTS = [self::STAR, self::PLANET, self::SATELLITE];
 
     /**
      * @var int
@@ -27,16 +27,31 @@ class SpacialEntityType
     /**
      * @var string
      */
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(length: 255, unique: true, nullable: false)]
     private string $name;
 
+    /**
+     * @return int
+     */
     public function getId(): int
     {
         return $this->id;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @param string $name
+     * @return void
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 }
