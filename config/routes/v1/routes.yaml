@@ -1,0 +1,4 @@
+star_system_index:
+  path: /star-systems
+  controller: App\Controller\PlanetarySystemController::index
+  methods: GET

@@ -3,3 +3,9 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+api_v1_routes:
+    resource: 'routes/v1/routes.yaml'
+    prefix: '/api/v1'
+    name_prefix: 'space_seekers_api_v1_'
+    trailing_slash_on_root: false

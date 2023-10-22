@@ -23,6 +23,18 @@ doctrine:
                 dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
+            DataClass:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Entity/DataClass'
+                prefix: 'App\Entity\DataClass'
+                alias: DataClasses
+            CelestialObject:
+                is_bundle: false
+                type: attribute
+                dir: '%kernel.project_dir%/src/Entity/CelestialObject'
+                prefix: 'App\Entity\CelestialObject'
+                alias: CelestialObject
 
 when@test:
     doctrine:
