@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Entity\DataClass;
 
 use App\Enum\TemperatureUnit;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,10 +21,10 @@ abstract class BaseSpacialEntity extends BaseEntity
     protected float $radius;
 
     /**
-     * @var float
+     * @var string
      */
-    #[ORM\Column(type: Types::FLOAT, length: 255)]
-    protected float $mass;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    protected string $mass;
 
     /**
      * @var float
@@ -41,16 +39,17 @@ abstract class BaseSpacialEntity extends BaseEntity
     protected float $effectiveTemperature;
 
     /**
-     * @var Collection
+     * {@inheritDoc}
+     * @param float $radius
+     * @param string $mass
+     * @param float $effectiveTemperature
+     * @param float $gravity
      */
-    #[ORM\ManyToMany(targetEntity: Element::class)]
-    protected Collection $elementalComposition;
-
     public function __construct(
         string $name,
         string $slug,
         float $radius,
-        float $mass,
+        string $mass,
         float $effectiveTemperature,
         float $gravity,
     ) {
@@ -60,7 +59,6 @@ abstract class BaseSpacialEntity extends BaseEntity
         $this->mass = $mass;
         $this->gravity = $gravity;
         $this->effectiveTemperature = $effectiveTemperature;
-        $this->elementalComposition = new ArrayCollection();
     }
 
     /**
@@ -81,18 +79,18 @@ abstract class BaseSpacialEntity extends BaseEntity
     }
 
     /**
-     * @return float
+     * @return string
      */
-    public function getMass(): float
+    public function getMass(): string
     {
         return $this->mass;
     }
 
     /**
-     * @param float $mass
+     * @param string $mass
      * @return void
      */
-    public function setMass(float $mass): void
+    public function setMass(string $mass): void
     {
         $this->mass = $mass;
     }
@@ -114,42 +112,10 @@ abstract class BaseSpacialEntity extends BaseEntity
     }
 
     /**
-     * @return Collection
-     */
-    public function getElementalComposition(): Collection
-    {
-        return $this->elementalComposition;
-    }
-
-    /**
      * @return float
      */
     public function getEffectiveTemperature(): float
     {
         return $this->effectiveTemperature;
-    }
-
-    /**
-     * @param Element $element
-     */
-    public function addElement(Element $element): void
-    {
-        $this->elementalComposition->add($element);
-    }
-
-    /**
-     * @param Element $element
-     */
-    public function removeElement(Element $element): void
-    {
-        $this->elementalComposition->removeElement($element);
-    }
-
-    /**
-     * @return void
-     */
-    public function clearElements(): void
-    {
-        $this->elementalComposition->clear();
     }
 }

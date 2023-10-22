@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
-use App\Entity\CelestialObject\Star;
 use App\Entity\DataClass\BaseEntity;
 use App\Repository\StarSystemRepository;
 use Doctrine\DBAL\Types\Types;
@@ -21,16 +20,9 @@ class StarSystem extends BaseEntity
     protected string $slug;
 
     /**
-     * @var Star
-     */
-    #[ORM\OneToOne(targetEntity: Star::class)]
-    #[ORM\JoinColumn(name: 'star_id', referencedColumnName: 'id')]
-    private Star $star;
-
-    /**
      * @var int
      */
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: Types::BIGINT)]
     private int $age;
 
     /**
@@ -39,34 +31,22 @@ class StarSystem extends BaseEntity
     #[ORM\Column(type: Types::TEXT)]
     private string $description;
 
+    /**
+     * @param string $name
+     * @param string $slug
+     * @param int $age
+     * @param string $description
+     */
     public function __construct(
       string $name,
       string $slug,
-      Star $star,
       int $age,
       string $description
     ) {
         parent::__construct($name, $slug);
 
-        $this->star = $star;
         $this->age = $age;
         $this->description = $description;
-    }
-
-    /**
-     * @return Star
-     */
-    public function getStar(): Star
-    {
-        return $this->star;
-    }
-
-    /**
-     * @param Star $star
-     */
-    public function setStar(Star $star): void
-    {
-        $this->star = $star;
     }
 
     /**

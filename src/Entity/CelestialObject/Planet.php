@@ -52,6 +52,15 @@ class Planet extends BaseSpacialEntity
     #[ORM\Column(type: Types::FLOAT)]
     private string $surfaceMatter;
 
+    /**
+     * {@inheritDoc}
+     * @param Star $star
+     * @param float $distanceFromStar
+     * @param float $axialTilt
+     * @param float $rotationCycle
+     * @param float $orbitalCycle
+     * @param StateOfMatter $surfaceMatter
+     */
     public function __construct(
         string $name,
         string $slug,

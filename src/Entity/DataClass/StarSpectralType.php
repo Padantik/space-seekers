@@ -13,22 +13,16 @@ use Doctrine\ORM\Mapping as ORM;
 class StarSpectralType extends BaseEntity
 {
     /**
-     * @var string
+     * @var float|null
      */
-    #[ORM\Column(type: Types::STRING, length: 1)]
-    private string $class;
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    private ?float $maxTemperature;
 
     /**
-     * @var int
+     * @var float
      */
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $maxTemperature;
-
-    /**
-     * @var int
-     */
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $minTemperature;
+    #[ORM\Column(type: Types::FLOAT)]
+    private float $minTemperature;
 
     /**
      * @var string
@@ -37,30 +31,27 @@ class StarSpectralType extends BaseEntity
     private string $chromaticity;
 
     /**
-     * @var int
+     * @var float|null
      */
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $maxLuminosity;
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    private ?float $maxLuminosity;
 
     /**
-     * @var int
+     * @var float|null
      */
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $minLuminosity;
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    private ?float $minLuminosity;
 
     public function __construct(
         string $name,
-        string $slug,
-        string $class,
-        int $maxTemperature,
-        int $minTemperature,
+        ?float $maxTemperature,
+        float $minTemperature,
         StarColour $chromaticity,
-        int $maxLuminosity,
-        int $minLuminosity,
+        ?float $maxLuminosity,
+        ?float $minLuminosity,
     ) {
-        parent::__construct($name, $slug);
+        parent::__construct($name, strtolower($name));
 
-        $this->class = $class;
         $this->maxTemperature = $maxTemperature;
         $this->minTemperature = $minTemperature;
         $this->chromaticity = $chromaticity->name;
@@ -69,25 +60,17 @@ class StarSpectralType extends BaseEntity
     }
 
     /**
-     * @return string
+     * @return float|null
      */
-    public function getClass(): string
-    {
-        return $this->class;
-    }
-
-    /**
-     * @return int
-     */
-    public function getMaxTemperature(): int
+    public function getMaxTemperature(): ?float
     {
         return $this->maxTemperature;
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getMinTemperature(): int
+    public function getMinTemperature(): float
     {
         return $this->minTemperature;
     }
@@ -101,17 +84,17 @@ class StarSpectralType extends BaseEntity
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getMaxLuminosity(): int
+    public function getMaxLuminosity(): ?float
     {
         return $this->maxLuminosity;
     }
 
     /**
-     * @return int
+     * @return float|null
      */
-    public function getMinLuminosity(): int
+    public function getMinLuminosity(): ?float
     {
         return $this->minLuminosity;
     }

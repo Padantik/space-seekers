@@ -4,70 +4,114 @@ declare(strict_types=1);
 
 namespace App\Calculator;
 
+use App\Enum\TemperatureUnit;
+
 final class TemperatureUnitCalculator
 {
     private const KELVIN_CONVERSION = 273.15;
 
     /**
-     * @param int|float $kelvin
-     * @return int|float
+     * @var float
      */
-    public function calculateKelvinToCelsius(int|float $kelvin): int|float
+    public float $inKelvin;
+
+    /**
+     * @var float
+     */
+    public float $inCelsius;
+
+    /**
+     * @var float
+     */
+    public float $inFahrenheit;
+
+    /**
+     * @param float $temperature
+     * @param TemperatureUnit $temperatureUnit
+     */
+    public function __construct(
+        float $temperature,
+        TemperatureUnit $temperatureUnit = TemperatureUnit::KELVIN,
+    ) {
+        switch ($temperatureUnit) {
+            case TemperatureUnit::CELSIUS:
+                $this->inKelvin = $this->calculateCelsiusToKelvin($temperature);
+                $this->inCelsius = $temperature;
+                $this->inFahrenheit = $this->calculateCelsiusToFahrenheit($temperature);
+                break;
+            case TemperatureUnit::FAHRENHEIT:
+                $this->inKelvin = $this->calculateFahrenheitToKelvin($temperature);
+                $this->inCelsius = $this->calculateFahrenheitToCelsius($temperature);
+                $this->inFahrenheit = $temperature;
+                break;
+            default:
+                $this->inKelvin = $temperature;
+                $this->inCelsius = $this->calculateKelvinToCelsius($temperature);
+                $this->inFahrenheit = $this->calculateKelvinToFahrenheit($temperature);
+                break;
+        }
+    }
+
+    /**
+     * @param float $kelvin
+     * @return float
+     */
+    private function calculateKelvinToCelsius(float $kelvin): float
     {
         return $kelvin - self::KELVIN_CONVERSION;
     }
 
     /**
-     * @param int|float $kelvin
-     * @return int|float
+     * @param float $kelvin
+     * @return float
      */
-    public function calculateKelvinToFahrenheit(int|float $kelvin): int|float
+    private function calculateKelvinToFahrenheit(float $kelvin): float
     {
         return $this->getFahrenheitFormula($kelvin - self::KELVIN_CONVERSION);
     }
 
     /**
-     * @param int|float $celsius
-     * @return int|float
+     * @param float $celsius
+     * @return float
      */
-    public function calculateCelsiusToKelvin(int|float $celsius): int|float
+    private function calculateCelsiusToKelvin(float $celsius): float
     {
         return $celsius + self::KELVIN_CONVERSION;
     }
 
     /**
-     * @param int|float $celsius
-     * @return int|float
+     * @param float $celsius
+     * @return float
      */
-    public function calculateCelsiusToFahrenheit(int|float $celsius): int|float
+    private function calculateCelsiusToFahrenheit(float $celsius): float
     {
         return $this->getFahrenheitFormula($celsius);
     }
 
     /**
-     * @param int|float $fahrenheit
-     * @return int|float
+     * @param float $fahrenheit
+     * @return float
      */
-    public function calculateFahrenheitToKelvin(int|float $fahrenheit): int|float
+    private function calculateFahrenheitToKelvin(float $fahrenheit): float
     {
         return $this->getFahrenheitFormula($fahrenheit, false) + self::KELVIN_CONVERSION;
     }
 
     /**
-     * @param int|float $fahrenheit
-     * @return int|float
+     * @param float $fahrenheit
+     * @return float
      */
-    public function calculateFahrenheitToCelsius(int|float $fahrenheit): int|float
+    private function calculateFahrenheitToCelsius(float $fahrenheit): float
     {
         return $this->getFahrenheitFormula($fahrenheit, false);
     }
 
     /**
-     * @param int|float $temperatureValue
+     * @param float $temperatureValue
      * @param bool $multiply
-     * @return int|float
+     * @return float
      */
-    private function getFahrenheitFormula(int|float $temperatureValue, bool $multiply = true): int|float
+    private function getFahrenheitFormula(float $temperatureValue, bool $multiply = true): float
     {
         if ($multiply) {
             return ($temperatureValue * 9 / 5) + 32;

@@ -10,19 +10,4 @@ use FOS\RestBundle\Controller\AbstractFOSRestController;
 
 class AbstractSpacialController extends AbstractFOSRestController
 {
-    /**
-     * {@inheritDoc}
-     */
-    public static function getSubscribedServices(): array
-    {
-        return [
-            ...parent::getSubscribedServices(),
-            TemperatureUnitCalculator::class,
-        ];
-    }
-
-    protected function getTemperatureCalculator(): TemperatureUnitCalculator
-    {
-        return $this->container->get(TemperatureUnitCalculator::class);
-    }
 }

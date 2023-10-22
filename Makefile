@@ -13,8 +13,11 @@ mig:
 	bin/console doctrine:migrations:migrate --env=test
 
 fixtures:
-	bin/console doctrine:fixtures:load -n
-	bin/console doctrine:fixtures:load -n --env=test
+	bin/console doctrine:fixtures:load -n --group 'Required'
+	bin/console doctrine:fixtures:load -n --env=test --group 'Required'
+
+fixtures-demo:
+	bin/console doctrine:fixtures:load -n --group=Required --group=Demo
 
 test:
 	php bin/phpunit

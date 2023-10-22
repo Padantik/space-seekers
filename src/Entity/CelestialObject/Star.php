@@ -44,13 +44,14 @@ class Star extends BaseSpacialEntity
      * @var Collection
      */
     #[ORM\OneToMany(mappedBy: 'planet', targetEntity: Planet::class)]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private Collection $planets;
 
     public function __construct(
         string $name,
         string $slug,
         float $radius,
-        float $mass,
+        string $mass,
         float $gravity,
         float $effectiveTemperature,
         StarSystem $starSystem,
@@ -85,6 +86,22 @@ class Star extends BaseSpacialEntity
     public function getPlanets(): Collection
     {
         return $this->planets;
+    }
+
+    /**
+     * @return StarSpectralType
+     */
+    public function getStarSpectralType(): StarSpectralType
+    {
+        return $this->starSpectralType;
+    }
+
+    /**
+     * @param StarSpectralType $starSpectralType
+     */
+    public function setStarSpectralType(StarSpectralType $starSpectralType): void
+    {
+        $this->starSpectralType = $starSpectralType;
     }
 
     /**

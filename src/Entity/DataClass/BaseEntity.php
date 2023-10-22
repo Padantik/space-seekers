@@ -30,6 +30,10 @@ abstract class BaseEntity
     #[ORM\Column(type: Types::STRING, length: 255)]
     protected string $slug;
 
+    /**
+     * @param string $name
+     * @param string $slug
+     */
     public function __construct(
         string $name,
         string $slug,

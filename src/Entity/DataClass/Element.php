@@ -33,12 +33,11 @@ class Element extends BaseEntity
 
     public function __construct(
         string $name,
-        string $slug,
         int $atomicNumber,
         string $symbol,
         StateOfMatter $phaseAtSTP,
     ) {
-        parent::__construct($name, $slug);
+        parent::__construct($name, strtolower($name));
 
         $this->atomicNumber = $atomicNumber;
         $this->symbol = $symbol;
